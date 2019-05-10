@@ -23,7 +23,7 @@
     <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/quizicon"/>
+            android:src="@drawable/icon"/>
 
     <info.hoang8f.widget.FButton
         android:id="@+id/playGame"
