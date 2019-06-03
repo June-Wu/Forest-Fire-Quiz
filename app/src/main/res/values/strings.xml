@@ -2,7 +2,7 @@
     <string name="app_name">Forest Fire Quiz</string>
     <string name="question">Question</string>
     <string name="play_again">Play again</string>
-    <string name="time">15</string>
+    <string name="time">10</string>
     <string name="correctans">Correct</string>
     <string name="wrongans">Wrong Answer</string>
     <string name="game_won">Congraduations You Won</string>
