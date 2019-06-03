@@ -7,7 +7,7 @@
     android:background="@color/backgroundColor"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="treeviz.forestfirequiz.outOfTime">
+    tools:context="treeviz.forestfirequiz.OutOfTime">
 
     <TextView
         android:id="@+id/timeUpText"

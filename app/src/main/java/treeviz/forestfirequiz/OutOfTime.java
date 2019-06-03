@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import info.hoang8f.widget.FButton;
 
-public class outOfTime extends AppCompatActivity {
+public class OutOfTime extends AppCompatActivity {
     FButton playAgain;
     TextView timeUpText;
 
@@ -23,7 +23,7 @@ public class outOfTime extends AppCompatActivity {
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(outOfTime.this, GameActivity.class);
+                Intent intent = new Intent(OutOfTime.this, GameActivity.class);
                 startActivity(intent);
                 finish();
             }

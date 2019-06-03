@@ -196,7 +196,7 @@ public class GameActivity extends AppCompatActivity {
 
     //Handles event when time is up
     public void outOfTime() {
-        Intent intent = new Intent(this, outOfTime.class);
+        Intent intent = new Intent(this, OutOfTime.class);
         startActivity(intent);
         finish();
     }

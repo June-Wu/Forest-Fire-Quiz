@@ -17,7 +17,8 @@
         </activity>
         <activity android:name="treeviz.forestfirequiz.PlayAgain" />
         <activity android:name="treeviz.forestfirequiz.WinActivity" />
-        <activity android:name="treeviz.forestfirequiz.outOfTime" />
+        <activity android:name="treeviz.forestfirequiz.OutOfTime" />
+        <activity android:name="treeviz.forestfirequiz.Question" />
         <activity android:name="treeviz.forestfirequiz.GameActivity">
 
         </activity>
