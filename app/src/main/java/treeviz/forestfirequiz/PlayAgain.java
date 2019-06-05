@@ -19,10 +19,8 @@ public class PlayAgain extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.play_again);
-       //Initialize
         playAgain = findViewById(R.id.playAgainButton);
         wrongAnswer = findViewById(R.id.wrongAns);
-
         playAgain.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.brown));
 
         playAgain.setOnClickListener(new View.OnClickListener() {
@@ -33,8 +31,6 @@ public class PlayAgain extends Activity {
                 finish();
             }
         });
-
-        //Setting typefaces for textview and button - this will give stylish fonts on textview and button
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/FFFTusj.ttf");
         playAgain.setTypeface(typeface);
         wrongAnswer.setTypeface(typeface);

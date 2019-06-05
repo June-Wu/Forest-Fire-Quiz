@@ -14,11 +14,8 @@ import java.util.List;
 class QuestionHelper extends SQLiteOpenHelper {
 
     private Context context;
-    private static final String DB_NAME = "TQuiz.db";
-
-    //If you want to add more questions or wanna update table values
-    //or any kind of modification in db just increment version no.
-    private static final int DB_VERSION = 7;
+    private static final String DB_NAME = "Quiz.db";
+    private static final int DB_VERSION = 1;
     private static final String TABLE = "TQ";
     private static final String ID = "_UID";
     private static final String QUESTION = "QUESTION";
@@ -27,7 +24,7 @@ class QuestionHelper extends SQLiteOpenHelper {
     private static final String C = "OPTC";
     private static final String D = "OPTD";
     private static final String ANS = "ANSWER";
-    //Table with columns in order of id , question , choice A, choice B , choice C , choice D , answer
+
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE
             + " ( " + ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " + QUESTION + " VARCHAR(255), "
             + A + " VARCHAR(255), " + B + " VARCHAR(255), " + C + " VARCHAR(255), " + D + " VARCHAR(255), "
@@ -41,13 +38,11 @@ class QuestionHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        //OnCreate is called only once
         sqLiteDatabase.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        //OnUpgrade is called when ever we upgrade or increment our database version no
         sqLiteDatabase.execSQL(DROP_TABLE);
         onCreate(sqLiteDatabase);
     }

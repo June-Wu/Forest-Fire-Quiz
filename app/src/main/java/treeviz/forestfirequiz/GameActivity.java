@@ -34,19 +34,45 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
+        initializeVars();
+        setFonts();
+        resetColor();
+        setUpQuestions();
+        setUpCountDown();
+        updateQueAndChoices();
+}
 
-        //initialize variables
-        questionTxt = findViewById(R.id.quizQuestion);
-        btnA = findViewById(R.id.buttonA);
-        btnB = findViewById(R.id.buttonB);
-        btnC = findViewById(R.id.buttonC);
-        btnD = findViewById(R.id.buttonD);
-        quizTxt = findViewById(R.id.quizText);
-        timeTxt = findViewById(R.id.timeText);
-        resultTxt = findViewById(R.id.resultText);
-        pointTxt = findViewById(R.id.pointText);
+    private void setUpCountDown() {
+        countDown = new CountDownTimer(20000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    timeTxt.setText(time + "\"");
+                    time -= 1;
 
-        //set fonts
+                    //times up
+                    if (time == -1) {
+                        resultTxt.setText(getString(R.string.timeup));
+                        disableBtns();
+                    }
+                }
+
+            public void onFinish() {
+                outOfTime();
+            }
+        }.start();
+    }
+
+    private void setUpQuestions() {
+        questionHelper = new QuestionHelper(this);
+        questionHelper.getWritableDatabase();
+        if (questionHelper.getAllQuestions().size() == 0) {
+            questionHelper.questionsList();
+        }
+        list = questionHelper.getAllQuestions();
+        Collections.shuffle(list);
+        currQuestion = list.get(id);
+    }
+
+    private void setFonts() {
         sType = Typeface.createFromAsset(getAssets(), "fonts/Sansation.ttf");
         fType = Typeface.createFromAsset(getAssets(), "fonts/FFFTusj.ttf");
         quizTxt.setTypeface(fType);
@@ -58,44 +84,18 @@ public class GameActivity extends AppCompatActivity {
         timeTxt.setTypeface(sType);
         resultTxt.setTypeface(fType);
         pointTxt.setTypeface(sType);
+    }
 
-        resetColor();
-        //initialize helper
-        questionHelper = new QuestionHelper(this);
-        questionHelper.getWritableDatabase();
-
-        //check of questions are already added to table
-        if (questionHelper.getAllQuestions().size() == 0) {
-            questionHelper.questionsList();
-        }
-
-        //gets a list of questions
-        list = questionHelper.getAllQuestions();
-
-        //randomly order the questions
-        Collections.shuffle(list);
-
-        //get question, choices, and answer of that id
-        currQuestion = list.get(id);
-
-        //countDown
-        countDown = new CountDownTimer(20000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                timeTxt.setText(time + "\"");
-                time -= 1;
-
-                //times up
-                if (time == -1) {
-                    resultTxt.setText(getString(R.string.timeup));
-                    disableBtns();
-                }
-            }
-
-            public void onFinish() {
-                outOfTime();
-            }
-        }.start();
-        updateQueAndChoices();
+    private void initializeVars() {
+        questionTxt = findViewById(R.id.quizQuestion);
+        btnA = findViewById(R.id.buttonA);
+        btnB = findViewById(R.id.buttonB);
+        btnC = findViewById(R.id.buttonC);
+        btnD = findViewById(R.id.buttonD);
+        quizTxt = findViewById(R.id.quizText);
+        timeTxt = findViewById(R.id.timeText);
+        resultTxt = findViewById(R.id.resultText);
+        pointTxt = findViewById(R.id.pointText);
     }
 
     //update question/choices, timer, and points
@@ -118,20 +118,16 @@ public class GameActivity extends AppCompatActivity {
 
 
     public void buttonA(View view) {
-        //answer correct
         if (currQuestion.getA().equals(currQuestion.getAns())) {
             btnA.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.lightGreen));
-            //did not finish all questions
             if (id < list.size() - 1) {
                 disableBtns();
                 showCorrect();
             }
-            //finished all questions
             else {
                 quizWon();
             }
         }
-        //Wrong answer
         else {
             quizLostAndReplay();
         }
@@ -180,14 +176,14 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    //This method will navigate from current activity to WinActivity
+    //Navigate to WinActivity
     public void quizWon() {
         Intent intent = new Intent(this, WinActivity.class);
         startActivity(intent);
         finish();
     }
 
-    //Handles event when game is lost, directs to play again
+    //Directs to PlayAgain upon game lost
     public void quizLostAndReplay() {
         Intent intent = new Intent(this, PlayAgain.class);
         startActivity(intent);
@@ -242,7 +238,7 @@ public class GameActivity extends AppCompatActivity {
 
         TextView correctTxt = dialogCorrectAnswer.findViewById(R.id.correctText);
         FButton btnNxt = dialogCorrectAnswer.findViewById(R.id.dialogNext);
-
+        btnNxt.setButtonColor(ContextCompat.getColor(getApplicationContext(),R.color.brown));
         correctTxt.setTypeface(fType);
         btnNxt.setTypeface(fType);
 
